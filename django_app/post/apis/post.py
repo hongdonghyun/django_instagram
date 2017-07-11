@@ -1,5 +1,5 @@
 from rest_framework import generics
-from rest_framework import request
+
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,12 +18,12 @@ class PostListCreateView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        instance = serializer.save(author=request.user)
-        comment_content = request.data.get('comment')
+        instance = serializer.save(author=self.request.user)
+        comment_content = self.request.data.get('comment')
         if comment_content:
             instance.my_comment = Comment.objects.create(
                 post=instance,
-                author=request.author,
+                author=self.request.author,
                 content=comment_content,
             )
             instance.save()

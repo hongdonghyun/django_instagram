@@ -30,5 +30,5 @@ class PostSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        ret['is_like'] = self.context['request'].user in instance.like_users
+        ret['is_like'] = self.context['request'].user in instance.like_users.all()
         return ret
