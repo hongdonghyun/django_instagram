@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from member.serializers import UserSerializer
+from post.serializers import CommentSerializer
 from ..models import Post
 
 __all__ = (
@@ -8,7 +10,9 @@ __all__ = (
 
 
 class PostSerializer(serializers.ModelSerializer):
-    # author = serializers.ReadOnlyField(source='author.username')
+    author = UserSerializer(read_only=True)
+    my_comment = CommentSerializer(read_only=True)
+    comments = CommentSerializer(read_only=True, many=True)
 
     class Meta:
         model = Post
@@ -16,7 +20,8 @@ class PostSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'photo',
-            'my_comment'
+            'my_comment',
+            'comments',
         )
         read_only_fields = (
             'author',
