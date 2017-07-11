@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from . import views
+from member import views
 
 app_name = 'member'
 urlpatterns = [
